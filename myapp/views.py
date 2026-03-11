@@ -11,9 +11,16 @@ class BookList(APIView):
         price = request.query_params.get('price')
         title = request.query_params.get('title')
 
-        if price:
-            books = books.filter(price__lte=price)
+        price_lte = request.query_params.get('price_lte')
+        price_gte = request.query_params.get('price_gte')
 
+
+        if price:
+            books = books.filter(price=price)
+        if price_lte:
+            books = books.filter(price__lte=price_lte)
+        if price_gte:
+            books = books.filter(price__gte=price_gte)
         if title:
             books = books.filter(title__icontains=title)
 
